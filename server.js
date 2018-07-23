@@ -18,15 +18,13 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
+app.enable('trust proxy');
 // your first API endpoint... 
 
 app.get("/api/whoami", function (req, res) {
  
-  const { ['accept-language']: acceptLanguage, ['user-agent']: userAgent  }= req.headers;
-  const { ip } = req; 
+  const { ['accept-language']: acceptLanguage, ['user-agent']: userAgent, ["x-forwarded-for"]: ip }= req.headers;
 
-  console.log(req.headers)
   res.json({
     ipaddress: ip,
     language: acceptLanguage,
